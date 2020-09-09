@@ -15,6 +15,9 @@ def index(request):
     list=listing.objects.all()
     l=[]
     for i in list:
+        if len(i.description)>130:
+            i.description=i.description[0:128]+"...."
+    for i in list:
         if i.status :
             l.append(i)
     return render(request, "auctions/index.html",{"listings":l,"status":True})
