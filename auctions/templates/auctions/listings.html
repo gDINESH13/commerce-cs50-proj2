@@ -1,0 +1,112 @@
+{% extends "auctions/layout.html" %}
+{%block body%}
+<h2>{{list.title}}</h2>
+{% if user.is_authenticated %}
+    {%if list.status %}
+        {% if user == list.creator %}
+            <form action="{% url 'closelist' list.id %}" method="POST">
+            	{% csrf_token %}
+            	<button type="submit" class="btn btn-outline-danger btn-sm">Close Listing</button>
+            	
+            </form>
+        {% else %}
+            {% if watchlist %}
+            <form action="{% url 'unsubscribe' list.id %}" method="POST">
+            	{% csrf_token %}
+            	<button type="submit" class="btn btn-outline-danger btn-sm">Remove from Watchlist</button>
+            </form>
+            {%else%}
+            <form action="{% url 'subscribe' list.id %}" method="POST">
+            	{% csrf_token %}
+            	<button type="submit" class="btn btn-outline-success btn-sm">Add to watchlist</button>
+            </form>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <div class="closelist" role="alert">
+        	SOLD
+        </div>
+        {% if bids.last.user == user %}
+        <div class="success" role="alert"> 
+            You won this auction.
+        </div>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+<img src="{{list.image}}">
+
+{% if bids.last is not None %}
+   <div ><h3>Rs.{{bids.last}}</h3></div>
+{% else %}
+   <div ><h3>Rs.{{list.start_bid}}</h3></div>
+{% endif %}
+{% if user.is_authenticated %}
+    {% if list.status %}
+    <form action="{% url 'bids' list.id %}" method="POST">
+        {% csrf_token %}
+        {% if bids.last == None %}
+         <small> There are not bids yet.</small>
+        {% elif bids.last.user == user %}
+        <small> {{bids.count}}bid(s) so far.Your bid is the current bid.</small>
+        {% else %}
+            <small>{{bids.count}} bid(s) so far.</small>
+        {% endif %}
+        <input type="text" name="bid" placeholder="Bid" class="form-control"
+        id="exampleInputEmail1" aria-describedby="emailHelp" style="width:20%;">
+        <div>
+            <button type="submit" class="btn btn-primary" >Place Bid</button>
+        </div>
+    </form>
+    {% endif %}
+
+{% endif %}
+
+<ul>
+        <li>Listed by <strong>{{ list.creator.username }}</strong></li>
+        {% if list.category == "" %}
+            <li>Category: <strong>  No category listed.</strong></li>
+        {% else %}
+            <li>Category:<strong>{{ list.category }}</strong> </li>  
+        {% endif %}
+        <li>Description: <strong> {{list.description}}  </strong></li>
+        <li>Posted on: <strong>{{ list.date}}</strong></li>
+</ul>
+{% if user.is_authenticated %}
+    {% if list.status %}
+    <h4>Add comments (optional)</h3>
+        <form action="{% url 'list' list.id %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" name="text" placeholder="Leave your comment"  style="width:40%;" >
+            </input > 
+            
+        </div>
+        <div><button type="submit" class="btn btn-primary" >Submit</button></div>
+        </form>
+    {% endif %}
+{% endif %}
+{% if comments %}
+
+<h4>Comments</h4>
+
+{% for comment in comments %}
+    
+        <div id="chatbox">
+    
+        <p style="margin-bottom: 0px;"><strong>{{ comment.user }}</strong><span  id="date">{{ comment.date }}</span></p>
+        <div>
+            <p style="margin-bottom: 0px;
+            color: blue;
+            background-color: #d3d3d3;
+            ">{{ comment.text }}</p>
+        </div>
+    
+        </div>
+   
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+body {
+    padding: 10px;
+    width: auto;
+}
+.list_cover
+{
+	width: 200px;
+	height: 200px;
+	border:1px solid #dfdfdf;
+	border-radius: 5px;
+}
+.closelist
+            {
+                color:blue;
+                font-size: 50px;
+            }

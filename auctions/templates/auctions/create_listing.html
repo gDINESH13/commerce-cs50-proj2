@@ -1,0 +1,51 @@
+{%extends "auctions/layout.html"%}
+{%block body%}
+<h1>Create list</h1>
+<form action="{% url 'createlisting' %}" method="post">
+	{%csrf_token%}
+	
+	<div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Title</span>
+        </div>
+        <input type="text" class="form-control" name="title" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Your Bid</span>
+        </div>
+        <input type="text" class="form-control" name="place_bid" placeholder="Your Bid" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">URL</span>
+        </div>
+        <input type="url" class="form-control" name="url" placeholder="(optional)" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <textarea type="text" class="form-control" name="description" placeholder="description" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+    </div>
+     
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Category</span>
+        </div>
+        <!--<input type="text" class="form-control" name="category" placeholder="Category" aria-label="Username" aria-describedby="basic-addon1">-->
+    <select name="category" class="form-control" aria-label="Username"
+        aria-describedby="basic-addon1" placeholder="category">
+        <option value="fashion">Fashion</option>
+        <option value="toys">toys</option>
+        <option value="Home">Home</option>
+        <option value="electronics">electronics</option> 
+        <option value="others">Others</option>
+    </select>
+    </div>
+    <div>
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+</form>
+{%endblock%}

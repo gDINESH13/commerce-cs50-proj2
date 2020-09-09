@@ -1,0 +1,132 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <style type="text/css">
+            .list_cover
+            {
+                display: inline-flex;
+                vertical-align: middle;
+                margin-bottom: 30px;
+                margin-left: 15px;
+                width: 45%;
+                height: 200px;
+                border: 1px solid #dfdfdf;
+                border-radius: 5px;
+                
+                
+            } 
+            .list_cover:hover{
+                box-shadow: 0px 10px 22px 2px rgba(0,0,0,0.44);
+             }
+            .list_img
+            {
+                margin-right: 10px;
+                height: 198px;
+                width: 200px;
+            }
+            .list_img img
+            {
+                 max-width: 100%;
+                 max-height: 100%;
+                 border-top-left-radius: 5px;
+                 border-bottom-left-radius: 5px;
+            }
+           
+            
+            .li
+            {
+               color:#000000;
+               
+            }
+            .li:hover
+            {
+                color: #000000;
+                width: 50px;
+                height:50px;
+                text-align: center;
+
+
+            }
+            .list_title
+            {
+                font-size: 20px;
+                text-align: center;
+
+            }
+            .closelist
+            {
+                color:red;
+                font-size: 50px;
+            }
+            .success
+            {
+                color:green;
+                font-size: 50px;
+            }
+            #chatbox
+            {
+                padding:5px;
+                width: 40%;
+                border-radius:5px;
+                border: 1px solid rgb(143,142,142);
+            }
+            #date
+            {
+                position: absolute;
+                right:65%;
+                font-size:10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Auctions</h1>
+        <div>
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+            </li>
+            <li class="nav-item">
+                <a  class="nav-link" href="{% url 'closed_listing' %}"> Closed Listings </a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav_item">
+                    <a href="{% url 'createlisting' %}" class="nav-link">Create Listing</a>
+                </li>
+                <li class="nav_item">
+                    <a href="{% url 'watchlist' %}" class="nav-link">Watchlist</a>
+                </li>
+                <li class="nav_item">
+                    <a href="{% url 'categories' %}" class="nav-link">Categories</a>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+                
+               
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+        <hr>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

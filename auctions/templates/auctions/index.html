@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if status %}
+    <h2>Active listings</h2>
+    {% else %}
+        <h2>Closed listings</h2>
+    {% endif %}
+
+
+    {%for listing in listings %}
+
+        
+        <div class="list_cover">
+                <div class="list_img">
+                    <img src="{{listing.image}}">
+                </div>
+               
+            
+            <div class="container">
+                <div class="row justify-content-start">
+                    <div class="col-4">
+                        <h3><a href="{% url 'list' listing.id %}" class="li">{{ listing.title }}</a></h3>
+                    </div>
+                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="description">
+                                <p>{{ listing.description }}</p>
+                            </div>
+                            <div class="price">
+                                 Initial Bid :Rs.{{listing.start_bid}}
+                            </div>  
+                        </div>
+                    </div>
+                        <div class="row justify-content-end">
+                            <div class="col-12">
+                                <div class="date">Created on {{ listing.date }}</div>
+                            </div>
+                        </div>
+                </div>
+        </div> 
+        {% empty %}
+            {% if status %}
+                <p>No active listings exist right now..</p> 
+            {% else %}
+                <p>None of the listings are closed yet..</p>
+            {% endif %}  
+          
+    {%endfor%}
+{% endblock %}

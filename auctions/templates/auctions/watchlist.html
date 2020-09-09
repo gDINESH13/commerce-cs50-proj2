@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+{%for listing in watchlist %}
+        
+        <div class="list_cover">
+                <div class="list_img">
+                    <img src="{{listing.image}}">
+                </div>
+               
+            
+            <div class="container">
+                <div class="row justify-content-start">
+                    <div class="col-4">
+                        <h3><a href="{% url 'list' listing.id %}" class="li">{{ listing.title }}</a></h3>
+                    </div>
+                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="description">
+                                <p>{{ listing.description }}</p>
+                            </div>
+                            <div class="price">
+                                 Rs.{{listing.start_bid}}
+                            </div>  
+                        </div>
+                    </div>
+                        <div class="row justify-content-end">
+                            <div class="col-12">
+                                <div class="date">Created on {{ listing.date }}</div>
+                            </div>
+                        </div>
+                </div>
+        </div>    
+    {%endfor%}
+{%endblock%}
