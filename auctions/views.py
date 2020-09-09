@@ -150,6 +150,9 @@ def categories(request):
 
 def category(request,category):
     listings=listing.objects.filter(category=category)
+    for i in listings:
+        if len(i.description)>130:
+            i.description=i.description[0:128]+"...."
     return render(request,"auctions/category.html",{"listings":listings})
 def bids(request,listing_id):
     if request.method=="POST":

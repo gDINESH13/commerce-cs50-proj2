@@ -71,7 +71,7 @@
 
 <ul>
         <li>Listed by <strong>{{ list.creator.username }}</strong></li>
-        {% if list.category == "" %}
+        {% if list.category == "others" %}
             <li>Category: <strong>  No category listed.</strong></li>
         {% else %}
             <li>Category:<strong>{{ list.category }}</strong> </li>  
