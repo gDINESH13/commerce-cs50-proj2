@@ -29,7 +29,11 @@
                                 <p>{{ listing.description }}</p>
                             </div>
                             <div class="price">
-                                 Initial Bid :Rs.{{listing.start_bid}}
+                                {% if listing.bids.last is not None %}
+                                    Current Bid :Rs.{{listing.bids.last}}
+                                {% else %}
+                                    Current Bid :Rs.{{listing.start_bid}}
+                                {% endif %}
                             </div>  
                         </div>
                     </div>

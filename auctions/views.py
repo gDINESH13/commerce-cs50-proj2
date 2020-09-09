@@ -12,12 +12,12 @@ from .models import *
 
 
 def index(request):
-    list=listing.objects.all()
+    listings=listing.objects.all()
     l=[]
-    for i in list:
+    for i in listings:
         if len(i.description)>130:
             i.description=i.description[0:128]+"...."
-    for i in list:
+    for i in listings:
         if i.status :
             l.append(i)
     return render(request, "auctions/index.html",{"listings":l,"status":True})
