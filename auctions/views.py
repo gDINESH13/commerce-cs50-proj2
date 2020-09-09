@@ -4,7 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 import datetime
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 
 from .models import *
 
@@ -154,11 +156,17 @@ def bids(request,listing_id):
         date=datetime.datetime.now()
         last_bid=list.bids.last()
         bid=Bid(value=value,user=user,list=list,date=date)
+        flag=0
         if last_bid is not None:
             if value>last_bid.value:
                 bid.save()
+                flag=1
         elif value>list.start_bid:
             bid.save()
+            flag=1
+        if flag==0:
+            messages.error(request,"Your bid is not greater than the current bid.")
+
     return HttpResponseRedirect(reverse('list',args=[listing_id,]))
    
 def closed_listing(request):

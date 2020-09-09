@@ -1,5 +1,11 @@
 {% extends "auctions/layout.html" %}
 {%block body%}
+{% for message in messages %}
+<div class="alert alert-danger">
+    <a class="close" href="" data-dismiss="alert">x</a>
+    {{ message }}
+</div>
+{% endfor %}
 <h2>{{list.title}}</h2>
 {% if user.is_authenticated %}
     {%if list.status %}
@@ -104,7 +110,7 @@
         </div>
     
         </div>
-   
+    
 {% endfor %}
 {% endif %}
 
